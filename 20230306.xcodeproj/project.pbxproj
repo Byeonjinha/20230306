@@ -18,8 +18,6 @@
 		BA0FF77629B5C1F700398E13 /* _0230306UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0FF77529B5C1F700398E13 /* _0230306UITestsLaunchTests.swift */; };
 		BA0FF78329B5C65800398E13 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0FF78229B5C65800398E13 /* CollectionViewCell.swift */; };
 		BA0FF78629B5CC0600398E13 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA0FF78529B5CC0600398E13 /* SnapKit */; };
-		BA0FF78D29B5EC8800398E13 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = BA0FF78C29B5EC8800398E13 /* RxCocoa */; };
-		BA0FF78F29B5EC8800398E13 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA0FF78E29B5EC8800398E13 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +59,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA0FF78F29B5EC8800398E13 /* RxSwift in Frameworks */,
-				BA0FF78D29B5EC8800398E13 /* RxCocoa in Frameworks */,
 				BA0FF78629B5CC0600398E13 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,8 +150,6 @@
 			name = 20230306;
 			packageProductDependencies = (
 				BA0FF78529B5CC0600398E13 /* SnapKit */,
-				BA0FF78C29B5EC8800398E13 /* RxCocoa */,
-				BA0FF78E29B5EC8800398E13 /* RxSwift */,
 			);
 			productName = 20230306;
 			productReference = BA0FF74C29B5C1F600398E13 /* 20230306.app */;
@@ -636,16 +630,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BA0FF78429B5CC0600398E13 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		BA0FF78C29B5EC8800398E13 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BA0FF78B29B5EC8800398E13 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		BA0FF78E29B5EC8800398E13 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BA0FF78B29B5EC8800398E13 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 
