@@ -12,13 +12,13 @@ class ViewController: UIViewController {
     
     var isAllLoad = false
     let imageURLs = [
-        "http://image.dongascience.com/Photo/2017/03/14900752352661.jpg",
-        "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074__480.jpg",
-        "https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494__480.png",
-        "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313__480.jpg",
-        "https://cdn.pixabay.com/photo/2018/01/09/11/04/dog-3071334__480.jpg"
+        "https://wallpaperaccess.com/download/europe-4k-1369012",
+        "https://wallpaperaccess.com/download/europe-4k-1318341",
+        "https://wallpaperaccess.com/download/europe-4k-1379801",
+        "https://wallpaperaccess.com/download/cool-lion-167408",
+        "https://wallpaperaccess.com/download/iron-man-323408"
     ]
-    
+
     private var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
     }
     
     @objc func tapAllLoad() {
-        isAllLoad = true
+        isAllLoad.toggle()
         collectionView.reloadData()
     }
 }

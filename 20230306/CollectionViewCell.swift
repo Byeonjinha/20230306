@@ -12,8 +12,25 @@ class CollectionViewCell: UICollectionViewCell {
     static let identifier = "CollectionViewCell"
     
     func setData(isAllLoad: Bool) {
-        isLoad = isAllLoad
-    }
+          // 기존 태스크 및 프로그래스 옵저버 해제
+          task?.cancel()
+          observation?.invalidate()
+          
+          isLoad = isAllLoad
+          
+          if isLoad {
+              self.button.isSelected = true
+          }
+      }
+    
+    private var observation: NSKeyValueObservation!
+    
+    private var task: URLSessionDataTask!
+    
+    private var urlSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        return URLSession(configuration: config)
+    }()
     
     let placeholderImage = UIImage(systemName: "photo")
     
@@ -39,34 +56,48 @@ class CollectionViewCell: UICollectionViewCell {
         return ImageView
     }()
     
-    lazy var progressView: UIProgressView = {
+    let progressView: UIProgressView = {
         let view = UIProgressView()
-        view.progress = 0.5
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var button: UIButton = {
         let button: UIButton = UIButton(type: .system)
         button.setTitle("Load", for: .normal)
+        button.setTitle("Stop", for: .selected)
         button.configuration = .filled()
         button.layer.cornerRadius = 10.0
         return button
     }()
     
+    func reset() {
+        imageView.image = .init(systemName: "photo")
+        progressView.progress = 0
+        button.isSelected = false
+    }
+    
     func loadImage(url: String) {
+        // 기존 태스크 취소
+        task?.cancel()
         
         // 이미지 URL
         let imageUrl = URL(string: url)!
-        
-        // URL 세션 생성
-        let session = URLSession.shared
         
         // URL 요청 생성
         let request = URLRequest(url: imageUrl)
         
         // URL 데이터 다운로드 태스크 생성
-        let task = session.dataTask(with: request) { (data, response, error) in
-            
+        task = urlSession.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                guard error.localizedDescription == "cancelled" else {
+                    fatalError(error.localizedDescription)
+                }
+                DispatchQueue.main.async {
+                    self.reset()
+                }
+                return
+            }
             // 다운로드 완료 후 처리할 작업
             if let data = data {
                 
@@ -76,10 +107,17 @@ class CollectionViewCell: UICollectionViewCell {
                 // 이미지 뷰에 이미지 설정
                 DispatchQueue.main.async {
                     self.imageView.image = image
+                    self.button.isSelected = false
                 }
+                
             }
         }
-        
+        observation = task.progress.observe(\.fractionCompleted, options: [.new]) { progress, _ in
+            DispatchQueue.main.async {
+                self.progressView.progress = Float(progress.fractionCompleted)
+            }
+        }
+
         // 태스크 실행
         task.resume()
         
@@ -87,9 +125,16 @@ class CollectionViewCell: UICollectionViewCell {
     weak var delegate: CustomCellDelegate?
     
     
-    @objc func tapLoad() {
-        self.isLoad = true
-    }
+    @objc func tapLoad(_ sender: UIButton)  {
+          sender.isSelected = !sender.isSelected
+          
+          if sender.isSelected {
+              self.isLoad = true
+          } else {
+              task?.cancel()
+              self.reset()
+          }
+      }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
